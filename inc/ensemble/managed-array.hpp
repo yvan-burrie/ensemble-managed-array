@@ -1,7 +1,7 @@
 /* License: MIT. See LICENSE in root directory. */
 
 /**
- * \date 2020/06/26
+ * \date 2020/06/27
  */
 
 #pragma once
@@ -17,11 +17,11 @@ class ManagedArray {
 
 protected:
 
-    T* m_values = nullptr; // aka m_values for HDE
+    T* m_values = nullptr;
 
-    int m_count = 0; // aka m_count for HDE
+    int m_count = 0;
 
-    int m_desiredNumberValue = 0; // aka m_desiredNumberValue for HDE
+    int m_desiredNumberValue = 0;
 
     /**
      * Determines the hidden number of values that are ready to be filled with new values.
@@ -92,5 +92,3 @@ public:
 template class ManagedArray<int>;
 
 } // namespace Ensemble
-
-//ENSEMBLE_MANAGED_ARRAY_DECLARE=template class ::Ensemble::ManagedArray<type>;

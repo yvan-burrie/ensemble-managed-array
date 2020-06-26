@@ -3,10 +3,12 @@
 
 cmake_minimum_required(VERSION 3.1.0)
 
-project("ensemble-managed-array" LANGUAGES CXX C)
+project("ensemble-managed-array" LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
+include_directories("${CMAKE_CURRENT_LIST_DIR}/inc")
 
 add_compile_definitions("ENSEMBLE_MANAGED_ARRAY_VERSION=1")
 set(ENSEMBLE_MANAGED_ARRAY_LIB "ensemble-managed-array-lib")
@@ -14,8 +16,8 @@ add_library(${ENSEMBLE_MANAGED_ARRAY_LIB} STATIC "")
 target_sources(
     ${ENSEMBLE_MANAGED_ARRAY_LIB}
     PUBLIC
-    "${CMAKE_CURRENT_LIST_DIR}/src/managed-array.cpp"
-    "${CMAKE_CURRENT_LIST_DIR}/src/managed-array.hpp"
+    "${CMAKE_CURRENT_LIST_DIR}/src/ensemble/managed-array.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/inc/ensemble/managed-array.hpp"
 )
 
 if (CMAKE_BUILD_TYPE MATCHES "^[Dd]ebug")
