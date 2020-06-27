@@ -89,6 +89,7 @@ bool ManagedArray<T>::contains(T r)
 template<typename T>
 bool ManagedArray<T>::add(T r)
 {
+    // Ensure that new value is unique:
     for (int i = 0; i < m_count; ++i)
     {
         if (i >= m_allocatedSize)
@@ -100,6 +101,8 @@ bool ManagedArray<T>::add(T r)
             return false;
         }
     }
+
+    // Expand values if needed:
     if (m_count > m_allocatedSize - 1)
     {
         auto temp_size = m_count + 1;
@@ -117,6 +120,7 @@ bool ManagedArray<T>::add(T r)
         m_allocatedSize = temp_size;
     }
 
+    // Set new value:
     m_values[m_count++] = r;
 
     return true;
@@ -129,7 +133,7 @@ T ManagedArray<T>::operator[](int v)
 {
     if (v > m_allocatedSize - 1)
     {
-        resize(v + 1); // Substituted duplicate code for ROR.
+        resize(v + 1);
     }
 
     return m_values[v];
@@ -141,6 +145,8 @@ template<typename T>
 bool ManagedArray<T>::remove(T r)
 {
     int i = 0;
+
+    // Find index of value to remove:
     while (i < m_allocatedSize)
     {
         if (m_values[i++] == r)
