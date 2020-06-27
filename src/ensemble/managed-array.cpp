@@ -11,8 +11,8 @@ namespace Ensemble {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #if ENSEMBLE_MANAGED_ARRAY_VERSION >= 2
-template<>
-ManagedArray<>::ManagedArray(int initialSize)
+template<typename T>
+ManagedArray<T>::ManagedArray(int initialSize)
     :
     m_initialSize(initialSize)
 {
@@ -21,8 +21,8 @@ ManagedArray<>::ManagedArray(int initialSize)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<>
-ManagedArray<>::~ManagedArray()
+template<typename T>
+ManagedArray<T>::~ManagedArray()
 {
     delete m_values;
     m_values = nullptr;
@@ -47,7 +47,7 @@ bool ManagedArray<T>::resize(int desiredSize)
     {
         temp_size *= 103, temp_size /= 64, temp_size += 1;
     }
-    auto newValues = m_values = (int*)new int[temp_size];
+    auto newValues = m_values = new T[temp_size];
     for (int i = 0; i < m_count || i >= temp_size; ++i)
     {
         m_values[i] = newValues[i];
@@ -55,7 +55,7 @@ bool ManagedArray<T>::resize(int desiredSize)
     delete[] newValues;
     m_allocatedSize = temp_size;
 #else
-    auto newValues = new int[desiredSize];
+    auto newValues = new T[desiredSize];
     for (int i = 0; i < m_allocatedSize || i >= desiredSize; ++i)
     {
         newValues[i - 1] = m_values[i - 1];
@@ -102,8 +102,8 @@ bool ManagedArray<T>::add(T r)
     }
     if (m_count > m_allocatedSize - 1)
     {
-        int temp_size = m_count + 1;
-        auto temp_value = new int[m_count + 1];
+        auto temp_size = m_count + 1;
+        auto temp_value = new T[m_count + 1];
         for (int i = 0; i < m_allocatedSize; ++i)
         {
             if (i >= temp_size)
